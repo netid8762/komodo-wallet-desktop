@@ -159,7 +159,7 @@ namespace atomic_dex
 
     bool application::has_coins_with_balance()
     {
-        // UNUSED (only in SimpleView)
+        SPDLOG_DEBUG("UNUSED ??"); // SimpleView?
         auto* portfolio_page = get_portfolio_page();
         auto* portfolio_mdl = portfolio_page->get_portfolio();
         auto portfolio_data = portfolio_mdl->get_underlying_data();
@@ -178,8 +178,6 @@ namespace atomic_dex
         using namespace std::string_literals;
         const std::string wallet_name                = qt_wallet_manager::get_default_wallet_name().toStdString();
         const std::string wallet_cfg_file            = std::string(atomic_dex::get_raw_version()) + "-coins"s + "."s + wallet_name + ".json"s;
-        std::string       wallet_custom_cfg_filename = "custom-tokens."s + wallet_name + ".json"s;
-        const fs::path    wallet_custom_cfg_path{utils::get_atomic_dex_config_folder() / wallet_custom_cfg_filename};
         const fs::path    wallet_cfg_path{utils::get_atomic_dex_config_folder() / wallet_cfg_file};
         const fs::path    kdf_coins_file_path{atomic_dex::utils::get_current_configs_path() / "coins.json"};
         const fs::path    ini_file_path      = atomic_dex::utils::get_current_configs_path() / "cfg.ini";
@@ -260,7 +258,7 @@ namespace atomic_dex
                 }
                 catch (const std::exception& error)
                 {
-                    SPDLOG_ERROR("Exception caught: {}", error.what());
+                    SPDLOG_ERROR("exception in atomic_dex::application::reset_coin_cfg: {}", error.what());
                 }
             }
 
@@ -273,20 +271,6 @@ namespace atomic_dex
             output_coins_file.close();
         }
 
-        if (fs::exists(wallet_custom_cfg_path))
-        {
-            nlohmann::json custom_config_json_data = utils::read_json_file(wallet_custom_cfg_path);
-
-            //! Modify
-            for (auto&& [key, value]: custom_config_json_data.items()) { value["active"] = false; }
-
-            //! Write
-            QFile      file;
-            file.setFileName(std_path_to_qstring(wallet_custom_cfg_path));
-            file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
-            file.write(QString::fromStdString(custom_config_json_data.dump()).toUtf8());
-            file.close();
-        }
         functor_remove(std::move(kdf_coins_file_path));
         functor_remove(std::move(cfg_json_file_path));
         functor_remove(std::move(logo_path));
@@ -337,7 +321,6 @@ namespace atomic_dex
                 bool add_to_init(true);
                 m_portfolio_queue.pop(ticker_cstr);
                 std::string ticker(ticker_cstr);
-                // TODO: why this?
                 if (ticker == g_primary_dex_coin)
                 {
                     this->m_primary_coin_fully_enabled = true;
@@ -675,7 +658,7 @@ namespace atomic_dex
     application::on_fiat_rate_updated(const fiat_rate_updated&)
     {
         this->dispatcher_.trigger<update_portfolio_values>();
-        // this->dispatcher_.trigger<current_currency_changed>();
+        this->dispatcher_.trigger<current_currency_changed>();
     }
 
     void

@@ -51,7 +51,6 @@ MultipageModal
         SearchField
         {
             id: input_coin_filter
-
             searchIconLeftMargin: 20
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 15
@@ -80,14 +79,12 @@ MultipageModal
                 {
                     id: _selectAllCheckBox
                     Layout.fillWidth: true
-
                     spacing: 0
                     boxWidth: 20
                     boxHeight: 20
                     labelWidth: parent.width - 40
                     label.wrapMode: Label.NoWrap
                     label.leftPadding: 24
-
                     text: qsTr("Select all assets")
                     visible: list.visible
 
@@ -102,7 +99,6 @@ MultipageModal
                 id: list
                 visible: coin_cfg_model.all_disabled_proxy.length > 0
                 model: coin_cfg_model.all_disabled_proxy
-
                 Layout.topMargin: 5
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: window.height - 400
@@ -142,7 +138,7 @@ MultipageModal
                                 if (checked !== backend_checked)
                                 {
                                     var data_index = coin_cfg_model.all_disabled_proxy.index(index, 0)
-                                    if ((coin_cfg_model.all_disabled_proxy.setData(data_index, checked, Qt.UserRole + 10)) === false)
+                                    if ((coin_cfg_model.all_disabled_proxy.setData(data_index, checked, Qt.UserRole + 9)) === false)
                                     {
                                         checked = false
                                     }
@@ -210,25 +206,6 @@ MultipageModal
             }
         }
 
-        Item
-        {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.fillWidth: true
-            Layout.preferredHeight: 40
-
-            DexTransparentButton
-            {
-                anchors.right: parent.right
-                text: qsTr("Add a custom asset")
-                Layout.preferredHeight: 35
-                iconSource: Qaterial.Icons.plus
-                onClicked: {
-                    root.close()
-                    add_custom_coin_modal.open()
-                }
-            }
-        }
-
         // Footer
         RowLayout
         {
@@ -239,7 +216,7 @@ MultipageModal
 
             CancelButton
             {
-                Layout.preferredWidth: 199
+                Layout.preferredWidth: 200
                 text: qsTr("Cancel")
                 radius: 18
                 onClicked: root.close()
@@ -249,7 +226,7 @@ MultipageModal
 
             DexAppOutlineButton
             {
-                Layout.preferredWidth: 199
+                Layout.preferredWidth: 200
                 visible: coin_cfg_model.length > 0
                 enabled: coin_cfg_model.checked_nb > 0
                 text: qsTr("Enable")

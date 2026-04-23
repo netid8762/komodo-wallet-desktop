@@ -13,7 +13,7 @@ import "../../ProView"
 ColumnLayout {
     id: root
     Layout.fillWidth: true 
-    Layout.maximumWidth: 450
+    Layout.maximumWidth: 530
     Layout.fillHeight: true
     spacing: 0
 
@@ -73,7 +73,7 @@ ColumnLayout {
                 ColumnLayout {
                     anchors.fill: parent
                     anchors.topMargin: 8
-                    spacing: 7
+                    spacing: 6
                     visible: swipeView.currentIndex === tabView.pair_chart_idx
 
                     TickerSelectors {
@@ -89,8 +89,8 @@ ColumnLayout {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         Layout.topMargin: 8
-                        Layout.leftMargin: 5
-                        Layout.rightMargin: 5
+                        Layout.leftMargin: 2
+                        Layout.rightMargin: 6
                     }
 
                     PriceLineSimplified {
@@ -98,8 +98,8 @@ ColumnLayout {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
                         Layout.bottomMargin: 12
-                        Layout.leftMargin: 5
-                        Layout.rightMargin: 5
+                        Layout.leftMargin: 8
+                        Layout.rightMargin: 8
                     }
                 }
             }

@@ -1,9 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-
 import Qaterial 1.0 as Qaterial
-
 import "../../../Constants"
 import "../../../Components"
 import App 1.0 as App
@@ -14,18 +12,19 @@ import Dex.Components 1.0 as Dex
 Widget
 {
     id: _control
-    property int page_index: 0
-    margins: 8
-    spacing: 8
+    margins: 6
+    spacing: 4
     collapsable: false
     visible: _control.page_index === 1
     enabled: visible
 
+    property int page_index: 0
+
     Header
     {
         visible: !warning_text.visible
-        Layout.topMargin: 6
-        Layout.bottomMargin: 6
+        Layout.topMargin: 8
+        Layout.bottomMargin: 4
         Layout.fillWidth: true
     }
 
@@ -54,8 +53,8 @@ Widget
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.bottomMargin: 6
-        visible: !warning_text.visible
         spacing: 6
+        visible: !warning_text.visible
         model: API.app.trading_pg.orderbook.best_orders.proxy_mdl
         reuseItems: true
         scrollbar_visible: false

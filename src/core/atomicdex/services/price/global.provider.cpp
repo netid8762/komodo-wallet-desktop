@@ -28,8 +28,30 @@ namespace
                                                               cfg.set_timeout(std::chrono::seconds(5));
                                                               return cfg;
                                                           }()};
-    t_http_client_ptr g_openrates_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://defistats.gleec.com"), g_openrates_cfg);
+    t_http_client_ptr g_openrates_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://api.frankfurter.dev"), g_openrates_cfg);
     pplx::cancellation_token_source g_token_source;
+
+    pplx::task<web::http::http_response>
+    async_fetch_fiat_rates()
+    {
+        web::http::http_request req;
+        req.set_method(web::http::methods::GET);
+        req.set_request_uri(FROM_STD_STR("v1/latest?base=USD"));
+        return g_openrates_client->request(req, g_token_source.get_token());
+    }
+
+    nlohmann::json
+    process_fetch_fiat_answer(web::http::http_response resp)
+    {
+        nlohmann::json answer;
+        if (resp.status_code() == 200)
+        {
+            answer = nlohmann::json::parse(TO_STD_STR(resp.extract_string(true).get()));
+            return answer;
+        }
+        SPDLOG_WARN("unable to fetch last open rates");
+        return answer;
+    }
 } // namespace
 
 namespace
@@ -74,6 +96,8 @@ namespace atomic_dex
     global_price_service::global_price_service(entt::registry& registry, ag::ecs::system_manager& system_manager, atomic_dex::cfg& cfg) :
         system(registry), m_system_manager(system_manager), m_cfg(cfg)
     {
+        m_update_clock = std::chrono::high_resolution_clock::now();
+        this->dispatcher_.sink<force_update_providers>().connect<&global_price_service::on_force_update_providers>(*this);
     }
 } // namespace atomic_dex
 
@@ -82,6 +106,15 @@ namespace atomic_dex
     void
     global_price_service::update()
     {
+        using namespace std::chrono_literals;
+        const auto now = std::chrono::high_resolution_clock::now();
+        const auto s   = std::chrono::duration_cast<std::chrono::seconds>(now - m_update_clock);
+        if (s >= 60min)
+        {
+            SPDLOG_INFO("global_price_service::update - 60min elapsed, updating rates");
+            this->on_force_update_providers({});
+            m_update_clock = std::chrono::high_resolution_clock::now();
+        }
     }
 
     void
@@ -113,7 +146,7 @@ namespace atomic_dex
                     if (m_coin_rate_providers.contains(fiat))
                     {
                         std::shared_lock lock(m_coin_rate_mutex);
-                        rate = t_float_50(m_coin_rate_providers.at(fiat)); ///< Retrieve BTC or KMD rate let's say for USD
+                        rate = t_float_50(m_coin_rate_providers.at(fiat));
                     }
                 }
                 t_float_50 tmp_current_price = t_float_50(current_price) * rate;
@@ -322,6 +355,30 @@ namespace atomic_dex
         }
     }
 
+    void
+    global_price_service::on_force_update_providers(const force_update_providers&)
+    {
+        auto error_functor = [](pplx::task<void> previous_task)
+        {
+            try
+            {
+                previous_task.wait();
+            }
+            catch (const std::exception& e)
+            {
+                SPDLOG_ERROR("exception in global_price_service::on_force_update_providers: {}", e.what());
+            };
+        };
+        async_fetch_fiat_rates()
+            .then(
+                [this](web::http::http_response resp)
+                {
+                    this->m_other_fiats_rates = process_fetch_fiat_answer(resp);
+                    SPDLOG_INFO("Successfully retrieved rate");
+                })
+            .then(error_functor);
+    }
+
     std::string
     global_price_service::get_fiat_rates(const std::string& fiat) const
     {
@@ -343,7 +400,7 @@ namespace atomic_dex
         if (fiat == "USD")
             return true;
         auto rates = m_other_fiats_rates.get();
-        SPDLOG_INFO("rates: {}", rates.dump(4));
+        //SPDLOG_DEBUG("rates: {}", rates.dump(4));
         return !rates.empty() && rates.contains("rates") && rates.at("rates").contains(fiat);
     }
 

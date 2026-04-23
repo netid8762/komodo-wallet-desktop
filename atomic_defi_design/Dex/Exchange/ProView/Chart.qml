@@ -10,12 +10,14 @@ import AtomicDEX.MarketMode 1.0
 Item
 {
     id: root
-    implicitWidth: 400
-    implicitHeight: 200
+    implicitWidth: 530
+    implicitHeight: 300
+
     readonly property string theme: Dex.CurrentTheme.getColorMode() === Dex.CurrentTheme.ColorMode.Dark ? "dark" : "light"
     property string loaded_symbol
     property bool pair_supported: false
     property string selected_testcoin
+
     onPair_supportedChanged: if (!pair_supported) webEngineViewPlaceHolder.visible = false
 
     Timer {
@@ -37,10 +39,10 @@ Item
     {
         let chart_html = ""
         let symbol = ""
-        let widget_x = 385
-        let widget_y = 150
-        let scale_x = root.width / widget_x
-        let scale_y = root.height / widget_y
+        let widget_x = 390
+        let widget_y = 200
+        let scale_x = root.implicitWidth / widget_x
+        let scale_y = root.implicitHeight / widget_y
 
         if (source == "livecoinwatch")
         {
@@ -83,11 +85,11 @@ Item
                     a { pointer-events: none; }
                 </style>
                 <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
-                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="#58c7c5" lcw-color-bg="${Dex.CurrentTheme.comboBoxBackgroundColor}" lcw-border-w="0" lcw-digits="9" ></div>
+                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${API.app.settings_pg.current_currency}" lcw-secondary="${base_ticker}" lcw-period="m" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="#58c7c5" lcw-color-bg="${Dex.CurrentTheme.comboBoxBackgroundColor}" lcw-border-w="0" lcw-digits="9" ></div>
                 `
             }
         }
-        // console.log(chart_html)
+        //console.log(chart_html)
         dashboard.webEngineView.loadHtml(chart_html)
     }
 

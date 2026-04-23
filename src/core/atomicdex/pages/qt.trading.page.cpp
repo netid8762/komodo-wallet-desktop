@@ -214,7 +214,7 @@ namespace atomic_dex
                     }
                     catch (const std::exception& e)
                     {
-                        SPDLOG_ERROR("exception/pplx task error: {}", e.what());
+                        SPDLOG_ERROR("exception in trading_page::place_setprice_order: {}", e.what());
                         auto error_json = QJsonObject({{"error_code", web::http::status_codes::InternalError}, {"error_message", e.what()}});
                         this->set_buy_sell_last_rpc_data(error_json);
                         this->set_buy_sell_rpc_busy(false);
@@ -358,7 +358,7 @@ namespace atomic_dex
                     }
                     catch (const std::exception& e)
                     {
-                        SPDLOG_ERROR("exception/pplx task error: {}", e.what());
+                        SPDLOG_ERROR("exception in trading_page::place_buy_order: {}", e.what());
                         auto error_json = QJsonObject({{"error_code", web::http::status_codes::InternalError}, {"error_message", e.what()}});
                         this->set_buy_sell_last_rpc_data(error_json);
                         this->set_buy_sell_rpc_busy(false);
@@ -517,7 +517,7 @@ namespace atomic_dex
                     }
                     catch (const std::exception& e)
                     {
-                        SPDLOG_ERROR("exception/pplx task error: {}", e.what());
+                        SPDLOG_ERROR("exception in trading_page::place_sell_order: {}", e.what());
                         auto error_json = QJsonObject({{"error_code", 500}, {"error_message", e.what()}});
                         this->set_buy_sell_last_rpc_data(error_json);
                         this->set_buy_sell_rpc_busy(false);
@@ -1344,7 +1344,10 @@ namespace atomic_dex
                     fees["fee_to_send_taker_fee"]        = QString::fromStdString(utils::adjust_precision(success_answer.fee_to_send_taker_fee.value().amount));
                     fees["fee_to_send_taker_fee_ticker"] = QString::fromStdString(success_answer.fee_to_send_taker_fee.value().coin);
 
-                    for (auto&& cur: success_answer.total_fees)
+                    auto total_fees_copy = success_answer.total_fees;
+                    fees["total_fees"] = atomic_dex::nlohmann_json_array_to_qt_json_array(total_fees_copy);
+
+                    for (auto&& cur: total_fees_copy)
                     {
                         if (!kdf.do_i_have_enough_funds(cur.at("coin").get<std::string>(), safe_float(cur.at("required_balance").get<std::string>())))
                         {
@@ -1352,13 +1355,14 @@ namespace atomic_dex
                             break;
                         }
                     }
-                    fees["total_fees"] = atomic_dex::nlohmann_json_array_to_qt_json_array(success_answer.total_fees);
 
                     this->set_fees(fees);
                 }
             }
+
             this->set_preimage_busy(false);
         };
+
         kdf.get_kdf_client().async_rpc_batch_standalone(batch).then(answer_functor).then(&handle_exception_pplx_task);
     }
 
@@ -1614,9 +1618,6 @@ namespace atomic_dex
     void
     trading_page::set_min_trade_vol(QString min_trade_vol)
     {
-        //! KMD<->DOGE Buy -> base_min_vol, sell base_min_vol ->
-        //! base_min_vol -> 0.0001 KMD
-        //! rel_min_vol -> 10 DOGE
         t_float_50   min_trade_vol_f         = safe_float(min_trade_vol.toStdString());
         const auto&  base_min_taker_vol      = get_orderbook_wrapper()->get_base_min_taker_vol().toStdString();
         t_float_50   base_min_taker_vol_f    = safe_float(base_min_taker_vol);

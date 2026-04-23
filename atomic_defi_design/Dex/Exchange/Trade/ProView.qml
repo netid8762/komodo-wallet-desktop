@@ -11,8 +11,6 @@ import "../../Components"
 import "../../Constants"
 import "../../Wallet"
 import App 1.0
-import "Trading/"
-import "Trading/Items/"
 import "OrderBook/" as OrderBook
 import "BestOrder/" as BestOrder
 import "Orders/" as OrdersView
@@ -101,7 +99,7 @@ RowLayout
     TradingInfo.Main
     {
         id: tradingInfo
-        Layout.preferredWidth: 450
+        Layout.preferredWidth: 530
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.alignment: Qt.AlignTop

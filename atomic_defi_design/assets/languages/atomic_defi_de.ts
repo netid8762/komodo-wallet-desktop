@@ -56,159 +56,6 @@
     </message>
 </context>
 <context>
-    <name>AddCustomCoinModal</name>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="30"/>
-        <source>Get the contract address from</source>
-        <translation>Erhalten Sie die Vertragsadresse von</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="147"/>
-        <source>Choose the asset type</source>
-        <translation>Wählen Sie den Asset-Typ aus</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="175"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="186"/>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="260"/>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="325"/>
-        <source>Next</source>
-        <translation>Weiter</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="202"/>
-        <source>Contract address</source>
-        <translation>Vertragsadresse</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="220"/>
-        <source>Enter the contract address</source>
-        <translation>Geben Sie die Vertragsadresse ein</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="202"/>
-        <source>Choose the asset ticker</source>
-        <translation>Wählen Sie den Asset-Ticker</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="210"/>
-        <source>Ticker</source>
-        <translation>Ticker</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="211"/>
-        <source>Enter the ticker</source>
-        <translation>Geben Sie den Ticker ein</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="228"/>
-        <source>Get the contract address from </source>
-        <translation>Erhalten Sie die Vertragsadresse von</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="250"/>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="316"/>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="403"/>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="501"/>
-        <source>Previous</source>
-        <translation>Vorherige</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="273"/>
-        <source>Choose the asset logo</source>
-        <translation>Wählen Sie ein Logo für das Asset aus</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="278"/>
-        <source>Browse</source>
-        <translation>Durchsuchen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="289"/>
-        <source>Please choose the asset logo</source>
-        <translation>Bitte wählen Sie für das Asset ein Logo aus</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="336"/>
-        <source>Configuration</source>
-        <translation>Konfiguration</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="342"/>
-        <source>All configuration fields will be fetched using the contract address you provided.</source>
-        <translation>Alle Konfigurationsfelder werden mit der von Ihnen angegebenen Vertragsadresse abgerufen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="351"/>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="352"/>
-        <source>Enter the name</source>
-        <translation>Geben Sie den Namen ein</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="359"/>
-        <source>Coingecko ID</source>
-        <translation>Coingecko ID</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="360"/>
-        <source>Enter the Coingecko ID</source>
-        <translation>Geben Sie die Coingecko-ID ein</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="367"/>
-        <source>Get the Coingecko ID</source>
-        <translation>Coingecko-ID erhalten</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="390"/>
-        <source>Active</source>
-        <translation>Aktiv</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="412"/>
-        <source>Preview</source>
-        <translation>Vorschau</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="428"/>
-        <source>Preview Token Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="434"/>
-        <source>WARNING: Application will restart immediately to apply the changes!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="458"/>
-        <source>Asset not found, please go back and make sure Contract Address is correct</source>
-        <translation>Asset nicht gefunden, bitte gehen Sie zurück und stellen Sie sicher, dass die Vertragsadresse korrekt ist</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="477"/>
-        <source>Config Fields</source>
-        <translation>Konfigurationsfelder</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="490"/>
-        <source>Fetched Data</source>
-        <translation>Abgerufene Daten</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/AddCustomCoinModal.qml" line="509"/>
-        <source>Submit &amp; Restart</source>
-        <translation>Bestätigen und Neu starten</translation>
-    </message>
-</context>
-<context>
     <name>AddTagPopup</name>
     <message>
         <location filename="../../Dex/Addressbook/AddTagPopup.qml" line="29"/>
@@ -1064,14 +911,6 @@ Beispiel: Kennwort = 1234    Suffix=56    Eingabe beim Login=123456</translation
     </message>
 </context>
 <context>
-    <name>DefaultTextEdit</name>
-    <message>
-        <location filename="../../Dex/Components/DefaultTextEdit.qml" line="12"/>
-        <source>copied to clipboard</source>
-        <translation type="unfinished">In die Zwischenablage kopiert</translation>
-    </message>
-</context>
-<context>
     <name>DeleteWalletModal</name>
     <message>
         <location filename="../../Dex/Settings/DeleteWalletModal.qml" line="22"/>
@@ -1345,19 +1184,6 @@ Beispiel: Kennwort = 1234    Suffix=56    Eingabe beim Login=123456</translation
         <location filename="../../Dex/Dashboard/FatalErrorModal.qml" line="37"/>
         <source>Close</source>
         <translation>Schließen</translation>
-    </message>
-</context>
-<context>
-    <name>FeeInfo</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/Items/FeeInfo.qml" line="54"/>
-        <source>Minimum fee</source>
-        <translation>Mindestgebühr</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/Items/FeeInfo.qml" line="55"/>
-        <source>Fees will be calculated</source>
-        <translation>Gebühren werden berechnet</translation>
     </message>
 </context>
 <context>
@@ -1738,11 +1564,6 @@ Try again or select &apos;Allow custom seed&apos; to continue.</source>
 <context>
     <name>List</name>
     <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/List.qml" line="290"/>
-        <source>Funds are recoverable</source>
-        <translation>Geldmittel sind erstattungsfähig</translation>
-    </message>
-    <message>
         <location filename="../../Dex/Exchange/Trade/BestOrder/List.qml" line="17"/>
         <source>Best Orders for %1</source>
         <translation type="unfinished"></translation>
@@ -1908,7 +1729,6 @@ They will be removed from the orderbook until you log in again.</source>
         <translation>Empfangen</translation>
     </message>
     <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Main.qml" line="103"/>
         <location filename="../../Dex/Wallet/Main.qml" line="533"/>
         <source>Swap</source>
         <translation>Tausch</translation>
@@ -1992,13 +1812,11 @@ They will be removed from the orderbook until you log in again.</source>
     </message>
     <message>
         <location filename="../../Dex/Exchange/ProView/TradingInfo/Main.qml" line="41"/>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Main.qml" line="113"/>
         <source>Orders</source>
         <translation type="unfinished">Order</translation>
     </message>
     <message>
         <location filename="../../Dex/Exchange/ProView/TradingInfo/Main.qml" line="49"/>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Main.qml" line="123"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
@@ -2677,25 +2495,6 @@ They will be removed from the orderbook until you log in again.</source>
     </message>
 </context>
 <context>
-    <name>OrderRemovedModal</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/OrderRemovedModal.qml" line="13"/>
-        <source>Selected Order Removed</source>
-        <translation>Ausgewählte Order entfernt</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/OrderRemovedModal.qml" line="20"/>
-        <source>The selected order does not exist anymore, it might have been matched or cancelled, and no order with a better price is available.
-Please select a new order.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/OrderRemovedModal.qml" line="27"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-</context>
-<context>
     <name>OrdersPage</name>
     <message>
         <location filename="../../Dex/Exchange/ProView/TradingInfo/OrdersPage.qml" line="99"/>
@@ -2819,45 +2618,6 @@ Please select a new order.</source>
         <location filename="../../Dex/Portfolio/Portfolio.qml" line="198"/>
         <source>(%1/%2)</source>
         <translation> (%1/%2)</translation>
-    </message>
-</context>
-<context>
-    <name>PriceLine</name>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="28"/>
-        <source>Set swap price for evaluation</source>
-        <translation>Legen Sie den Tausch-Preis für die Bewertung fest</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="41"/>
-        <source>Exchange rate</source>
-        <translation>Wechselkurs</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="41"/>
-        <source>Selected</source>
-        <translation>Ausgewählt</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="100"/>
-        <source>Expensive</source>
-        <translation>Teuer</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="100"/>
-        <source>Expedient</source>
-        <translation>Sinnvoll</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="100"/>
-        <source>%1 compared to CEX</source>
-        <comment>PRICE_DIFF%</comment>
-        <translation>%1 im Vergleich zu CEX</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/ProView/TradingInfo/PriceLine.qml" line="120"/>
-        <source>CEXchange rate</source>
-        <translation>CEX-Wechselkurs</translation>
     </message>
 </context>
 <context>
@@ -3663,194 +3423,6 @@ Please select a new order.</source>
     </message>
 </context>
 <context>
-    <name>SubBestOrder</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="62"/>
-        <source>Token</source>
-        <translation>Token</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="76"/>
-        <source>Available Quantity</source>
-        <translation>Verfügbare Menge</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="90"/>
-        <source>Available Quantity (in %1)</source>
-        <translation>Verfügbare Menge (in %1)</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="102"/>
-        <source>Fiat Volume</source>
-        <translation>Fiat Volumen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="114"/>
-        <source>CEX Rate</source>
-        <translation>CEX-Kurs</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="235"/>
-        <source> %1 is not enabled - Do you want to enable it to be able to select %2 best orders ?&lt;br&gt;&lt;a href=&apos;#&apos;&gt;Yes&lt;/a&gt; - &lt;a href=&apos;#no&apos;&gt;No&lt;/a&gt;</source>
-        <translation>%1 ist nicht aktiviert - Möchten Sie es aktivieren, um die günstigsten Order von %2 auswählen zu können? &lt;br&gt;&lt;a href=&apos;#&apos;&gt;Ja&lt;/a&gt; - &lt;a href=&apos;#no&apos;&gt;Nein&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubBestOrder.qml" line="236"/>
-        <source> %1 is not enabled - Please enable it through the coin activation menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SubCoinSelector</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubCoinSelector.qml" line="56"/>
-        <source>Token</source>
-        <translation>Token</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubCoinSelector.qml" line="81"/>
-        <source>Balance</source>
-        <translation>Balance</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubCoinSelector.qml" line="106"/>
-        <source>Balance Fiat</source>
-        <translation>Fiat Balance</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubCoinSelector.qml" line="196"/>
-        <source>No Selectable coin.</source>
-        <translation>Kein wählbarer Coin.</translation>
-    </message>
-</context>
-<context>
-    <name>SubHistory</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="92"/>
-        <source>History</source>
-        <translation>Historie</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="104"/>
-        <source>Filter</source>
-        <translation>Filter</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="107"/>
-        <source>Date</source>
-        <translation>Datum</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="128"/>
-        <source>Close filtering options.</source>
-        <translation>Filteroptionen schließen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="128"/>
-        <source>Open filtering options.</source>
-        <translation>Filteroptionen öffnen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="165"/>
-        <source>Filter settings</source>
-        <translation>Filtereinstellungen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="221"/>
-        <source>From</source>
-        <translation>Von</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="234"/>
-        <source>To</source>
-        <translation>Bis</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="260"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="270"/>
-        <source>Apply filter</source>
-        <translation>Filter anwenden</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="312"/>
-        <source>Export</source>
-        <translation>Exportieren</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="326"/>
-        <source>Please choose the CSV export name and location</source>
-        <translation>Bitte wählen Sie den CSV-Exportnamen und den Speicherort aus</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubHistory.qml" line="354"/>
-        <source>No results found</source>
-        <translation>Keine Ergebnisse gefunden</translation>
-    </message>
-</context>
-<context>
-    <name>SubOrders</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="84"/>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="286"/>
-        <source>Orders</source>
-        <translation type="unfinished">Order</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="119"/>
-        <source>Close filtering options.</source>
-        <translation>Filteroptionen schließen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="96"/>
-        <source>Filter</source>
-        <translation>Filter</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="99"/>
-        <source>Date</source>
-        <translation>Datum</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="119"/>
-        <source>Open filtering options.</source>
-        <translation>Filteroptionen öffnen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="161"/>
-        <source>Filter settings</source>
-        <translation>Filtereinstellungen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="215"/>
-        <source>From</source>
-        <translation>Von</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="228"/>
-        <source>To</source>
-        <translation>Bis</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="253"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="262"/>
-        <source>Apply filter</source>
-        <translation>Filter anwenden</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/SubOrders.qml" line="298"/>
-        <source>No results found</source>
-        <translation>Keine Ergebnisse gefunden</translation>
-    </message>
-</context>
-<context>
     <name>SupportModal</name>
     <message>
         <location filename="../../Dex/Support/SupportModal.qml" line="75"/>
@@ -4084,197 +3656,6 @@ There is a toggle in settings where you can turn on/off the display of these tra
         <location filename="../../Dex/Exchange/ProView/PlaceOrderForm/TotalView.qml" line="63"/>
         <source>Send %1</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Trade</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="158"/>
-        <source>Swap</source>
-        <translation>Tauschen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="167"/>
-        <source>Instant trading with best orders</source>
-        <translation>Sofortiger Handel mit den besten Order</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="199"/>
-        <source>Reset form</source>
-        <translation>Formular zurücksetzen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="206"/>
-        <source>You have no tradable assets</source>
-        <translation>Keine handelbaren Assets vorhanden</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="241"/>
-        <source>From</source>
-        <translation>Von</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="729"/>
-        <source>Entered amount must be higher than 0.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="731"/>
-        <source>Select an order.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="445"/>
-        <source>MAX</source>
-        <translation>MAX</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="475"/>
-        <source>To</source>
-        <translation>Nach</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="550"/>
-        <source>Pick an order</source>
-        <translation>Order auswählen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="633"/>
-        <source>Price</source>
-        <translation>Preis</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="101"/>
-        <source>Better price found: %1. Updating forms.</source>
-        <translation>Besseren Preis gefunden: %1. Formulare aktualisieren.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="114"/>
-        <source>Better price (%1) found but received quantity (%2) is lower than your current one (%3). Click here to update the selected order.</source>
-        <translation>Besseren Preis (%1) gefunden, aber erhaltene Menge (%2) ist niedriger als Ihre aktuelle (%3). Klicken Sie hier, um den ausgewählte Order zu aktualisieren.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="255"/>
-        <source>%1</source>
-        <translation>%1</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="288"/>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="291"/>
-        <source>Balance: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="288"/>
-        <source>****</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="407"/>
-        <source>Pick a coin</source>
-        <translation>Wählen Sie einen Coin</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="665"/>
-        <source>SWAP NOW</source>
-        <translation>JETZT TAUSCHEN</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="689"/>
-        <source>Failed to place the order</source>
-        <translation>Die Order konnte nicht platziert werden</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="704"/>
-        <source>Placed the order</source>
-        <translation>Order platziert</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="722"/>
-        <source>Disable privacy mode to trade.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="756"/>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="809"/>
-        <source>Search coins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="824"/>
-        <source>Min Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="847"/>
-        <source>Hide disabled coins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="908"/>
-        <source>No buy orders found for %1.</source>
-        <translation>Keine Kauforder für %1 gefunden.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="915"/>
-        <source>You can check later or try to sell a different coin.</source>
-        <translation>Sie können später nachsehen oder versuchen, einen anderen Coin zu verkaufen.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="944"/>
-        <source>Calculating fee estimate... </source>
-        <translation>Geschätzten Gebühren werden berechnet...</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="972"/>
-        <source>Total %1 fees: </source>
-        <translation>%1 Gesamtgebühren:</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/SimpleView/Trade.qml" line="980"/>
-        <source>%2 (%3)</source>
-        <translation>%2 (%3)</translation>
-    </message>
-</context>
-<context>
-    <name>TradeViewHeader</name>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/TradeViewHeader.qml" line="96"/>
-        <source>Pro View Settings</source>
-        <translation>Pro-Ansicht Einstellungen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/TradeViewHeader.qml" line="121"/>
-        <source>Display Settings</source>
-        <translation>Bildschirmeinstellungen</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/TradeViewHeader.qml" line="129"/>
-        <source>Order Book</source>
-        <translation type="unfinished">Orderbuch</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/TradeViewHeader.qml" line="133"/>
-        <source>Order Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Exchange/Trade/Trading/TradeViewHeader.qml" line="125"/>
-        <source>Trading Information</source>
-        <translation>Handelsinformationen</translation>
-    </message>
-</context>
-<context>
-    <name>TradingViewChart</name>
-    <message>
-        <location filename="../../Dex/Portfolio/TradingViewChart.qml" line="126"/>
-        <source>Loading market data</source>
-        <translation type="unfinished">Laden von Marktdaten</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Portfolio/TradingViewChart.qml" line="132"/>
-        <source>There is no chart data for this ticker yet</source>
-        <translation type="unfinished">Für diesen Ticker liegen noch keine Chartdaten vor</translation>
     </message>
 </context>
 <context>
