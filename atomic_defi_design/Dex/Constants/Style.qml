@@ -193,6 +193,7 @@ QtObject {
             case 'Ethereum Classic':  return dark_theme ? colorCoinDark["ETC"] : colorCoin["ETC"]
             case 'Arbitrum':          return dark_theme ? colorCoinDark["ETH-ARB20"] : colorCoin["ETH-ARB20"]
             case 'Base':              return dark_theme ? colorCoinDark["ETH-BASE"] : colorCoin["ETH-BASE"]
+            case 'Gnosis':            return dark_theme ? colorCoinDark["XDAI"] : colorCoin["XDAI"]
             case 'ERC-20':            return dark_theme ? colorCoinDark["ETH"] : colorCoin["ETH"]
             case 'GRC-20':            return dark_theme ? colorCoinDark["GLEEC"] : colorCoin["GLEEC"]
             case 'TRC-20':            return dark_theme ? colorCoinDark["TRX"] : colorCoin["TRX"]
@@ -236,6 +237,7 @@ QtObject {
             case 'Ethereum Classic':  return dark_theme ? colorCoinDark["ETC"] : colorCoin["ETC"]
             case 'Arbitrum':          return dark_theme ? colorCoinDark["ETH-ARB20"] : colorCoin["ETH-ARB20"]
             case 'Base':              return dark_theme ? colorCoinDark["ETH-BASE"] : colorCoin["ETH-BASE"]
+            case 'Gnosis':            return dark_theme ? colorCoinDark["XDAI"] : colorCoin["XDAI"]
             case 'ERC-20':            return dark_theme ? colorCoinDark["ETH"] : colorCoin["ETH"]
             case 'GRC-20':            return dark_theme ? colorCoinDark["GLEEC"] : colorCoin["GLEEC"]
             case 'TRC-20':            return dark_theme ? colorCoinDark["TRX"] : colorCoin["TRX"]
@@ -281,9 +283,9 @@ QtObject {
                                           "ETC": "#328432",
                                           "ETH": "#687DE3",
                                           "ETH-ARB20": "#12aaff",
-                                          "ETH-BASE": "#0000ff",
+                                          "ETH-BASE": "#1652F0",
                                           "EWT": "#A466FF",
-                                          "GLEEC": "#431a80",
+                                          "GLEEC": "#6438ac",
                                           "GLMR": "#F6007C",
                                           "QTUM": "#2E9AD0",
                                           "KCS": "#25AF90",
@@ -293,6 +295,7 @@ QtObject {
                                           "ONE": "#00BEEE",
                                           "SBCH": "#74dd54",
                                           "TRX": "#EF002F",
+                                          "XDAI": "#00bad3",
                                           "UTXO": "#349d5f",
                                           "default": "#2f2f2f",
                                           "IDO": "#536E93",
@@ -308,9 +311,9 @@ QtObject {
                                           "ETC": "#328432",
                                           "ETH": "#687DE3",
                                           "ETH-ARB20": "#12aaff",
-                                          "ETH-BASE": "#0000ff",
+                                          "ETH-BASE": "#1652F0",
                                           "EWT": "#A466FF",
-                                          "GLEEC": "#431a80",
+                                          "GLEEC": "#6438ac",
                                           "GLMR": "#F6007C",
                                           "QTUM": "#2E9AD0",
                                           "KCS": "#25AF90",
@@ -320,6 +323,7 @@ QtObject {
                                           "ONE": "#00BEEE",
                                           "SBCH": "#74dd54",
                                           "TRX": "#EF002F",
+                                          "XDAI": "#00bad3",
                                           "UTXO": "#349d5f",
                                           "default": "#c8c8c8",
                                           "IDO": "#536E93",
