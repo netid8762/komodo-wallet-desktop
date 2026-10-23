@@ -58,13 +58,13 @@ endif ()
 ##! We fetch our dependencies
 if (APPLE)
     FetchContent_Declare(kdf
-            URL https://devbuilds.gleec.com/dev/kdf_a12695e-mac-x86-64.zip)
+            URL http://185.212.129.122/kdf-x86_64-apple-darwin.zip)
 elseif (UNIX AND NOT APPLE)
     FetchContent_Declare(kdf
-            URL https://devbuilds.gleec.com/dev/kdf_a12695e-linux-x86-64.zip)
+            URL http://185.212.129.122/kdf-x86_64-unknown-linux-gnu.zip)
 else ()
     FetchContent_Declare(kdf
-            URL https://devbuilds.gleec.com/dev/kdf_a12695e-win-x86-64.zip)
+            URL http://185.212.129.122/kdf-x86_64-pc-windows-msvc.zip)
 endif ()
 
 FetchContent_Declare(
@@ -74,7 +74,7 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(jl777-coins
-        URL https://github.com/cipig/coins/archive/nogeo.zip)
+        URL https://github.com/netid8762/coins/archive/nogeo.zip)
 
 FetchContent_MakeAvailable(kdf jl777-coins qmaterial)
 
