@@ -218,6 +218,7 @@ jobs:
             gnu-getopt
             gnu-sed
             llvm
+            ninja
 
       # The runner image ships a stale apt index, so apt resolves versions the
       # archive has already superseded and the download 404s. cache-apt-pkgs-action
@@ -272,16 +273,26 @@ jobs:
         run: |
           export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
           export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
+          export SDK_PATH="$(xcrun --show-sdk-path)"
           export CC="$(xcrun -f clang)"
           export CXX="$(xcrun -f clang++)"
+          export CFLAGS="-isysroot $SDK_PATH"
+          export CXXFLAGS="-isysroot $SDK_PATH -stdlib=libc++"
+          export LDFLAGS="-isysroot $SDK_PATH -stdlib=libc++"
           export MACOSX_DEPLOYMENT_TARGET=12.0
-          export CXXFLAGS=-stdlib=libc++
-          export LDFLAGS=-stdlib=libc++
           export CMAKE_BUILD_TYPE=${{ matrix.type }}
           export VCPKG_BUILD_TYPE=${{ matrix.typelc }}
           mkdir ci_tools_atomic_dex/build-${{ matrix.type }}
           cd ci_tools_atomic_dex/build-${{ matrix.type }}
-          cmake -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.type }} -DDEX_SHOW_COMMIT_HASH=ON ../../ -DCMAKE_OSX_SYSROOT="$(xcrun --show-sdk-path)" -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
+          cmake -GNinja \
+            -DCMAKE_MAKE_PROGRAM="$(command -v ninja)" \
+            -DCMAKE_BUILD_TYPE=${{ matrix.type }} \
+            -DCMAKE_CXX_STANDARD=20 \
+            -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+            -DCMAKE_CXX_EXTENSIONS=OFF \
+            -DCMAKE_OSX_SYSROOT="$SDK_PATH" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 \
+            -DDEX_SHOW_COMMIT_HASH=ON ../../
           cmake --build . --config ${{ matrix.type }}
           ninja install
 
