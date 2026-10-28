@@ -201,19 +201,19 @@ namespace atomic_dex::kdf
     }
 
     async::task<t_http_response>
-    kdf_client::async_rpc_batch_standalone(nlohmann::json&& batch_array, t_http_priority prio)
+    kdf_client::async_rpc_batch_standalone(nlohmann::json&& batch_array, t_http_priority prio, std::chrono::seconds timeout)
     {
         auto& scheduler = (prio == t_http_priority::background)
                           ? atomic_dex::http::client::get_background_scheduler()
                           : atomic_dex::http::client::get_interactive_scheduler();
 
-        return async::spawn(scheduler, [batch_array = std::move(batch_array), prio]() mutable {
+        return async::spawn(scheduler, [batch_array = std::move(batch_array), prio, timeout]() mutable {
             try
             {
                 t_http_request request;
                 request.set_method(http_method::POST);
                 request.set_body(batch_array.dump());
-                auto resp = generate_client().request(request, prio);
+                auto resp = generate_client(timeout).request(request, prio);
                 return resp.get();
             }
             catch (const std::exception& error)

@@ -20,7 +20,8 @@ namespace atomic_dex::kdf
 
         async::task<t_http_response> async_rpc_batch_standalone(
             nlohmann::json&& batch_array,
-            t_http_priority prio = t_http_priority::interactive
+            t_http_priority prio = t_http_priority::interactive,
+            std::chrono::seconds timeout = std::chrono::seconds::zero()
         );
 
         template <rpc Rpc>
