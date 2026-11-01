@@ -904,7 +904,9 @@ namespace atomic_dex
                 else
                 {
                     auto max_vol_str = utils::format_float(safe_float(max_taker_vol));
-                    if (m_preferred_order.has_value() && !m_preferred_order->empty() && m_preferred_order->contains("base_max_volume"))
+
+                    if (m_preferred_order.has_value() && !m_preferred_order->empty() &&
+                        m_preferred_order->contains("base_max_volume") && m_preferred_order->at("base_max_volume").is_string())
                     {
                         auto       available_quantity       = m_preferred_order->at("base_max_volume").get<std::string>();
                         t_float_50 available_quantity_order = safe_float(available_quantity);
@@ -1457,9 +1459,17 @@ namespace atomic_dex
         const auto&       left_cfg                 = kdf.get_coin_info(left);
         const auto&       right_cfg                = kdf.get_coin_info(right);
         const bool        has_preferred_order      = m_preferred_order.has_value();
-        const bool        is_selected_min_max =
-            has_preferred_order && m_preferred_order->at("base_min_volume").get<std::string>() == m_preferred_order->at("base_max_volume").get<std::string>();
-        
+
+        bool is_selected_min_max = false;
+        if (has_preferred_order)
+        {
+            if (m_preferred_order->contains("base_min_volume") && m_preferred_order->at("base_min_volume").is_string() &&
+                m_preferred_order->contains("base_max_volume") && m_preferred_order->at("base_max_volume").is_string())
+            {
+                is_selected_min_max = m_preferred_order->at("base_min_volume").get<std::string>() == m_preferred_order->at("base_max_volume").get<std::string>();
+            }
+        }
+
         if (left_cfg.has_parent_fees_ticker && left_cfg.ticker != "QTUM")
         {
             const auto&       left_fee_cfg             = kdf.get_coin_info(left_cfg.fees_ticker);
