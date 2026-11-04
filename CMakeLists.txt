@@ -55,17 +55,8 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(LINUX TRUE)
 endif ()
 
-##! We fetch our dependencies
-if (APPLE)
-    FetchContent_Declare(kdf
-            URL http://185.212.129.122/kdf-x86_64-apple-darwin.zip)
-elseif (UNIX AND NOT APPLE)
-    FetchContent_Declare(kdf
-            URL http://185.212.129.122/kdf-x86_64-unknown-linux-gnu.zip)
-else ()
-    FetchContent_Declare(kdf
-            URL http://185.212.129.122/kdf-x86_64-pc-windows-msvc.zip)
-endif ()
+FetchContent_Declare(kdf
+        SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/kdf_archives")
 
 FetchContent_Declare(
         qmaterial
