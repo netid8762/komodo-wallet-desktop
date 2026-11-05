@@ -100,7 +100,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           repository: netid8762/kdf
-          run-id: 41964834704
+          run-id: 42089388768
           name: ${{ matrix.host == 'mac' && 'kdf-x86_64-apple-darwin' || matrix.host == 'linux' && 'kdf-x86_64-unknown-linux-gnu' || 'kdf-x86_64-pc-windows-msvc' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ${{ github.workspace }}/kdf_archives
