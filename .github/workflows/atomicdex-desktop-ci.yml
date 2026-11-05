@@ -97,13 +97,20 @@ jobs:
           fetch-depth: 0
 
       - name: Download KDF Artifact from External Repo
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           repository: netid8762/kdf
           run-id: 41765061720
           name: ${{ matrix.host == 'mac' && 'kdf-x86_64-apple-darwin' || matrix.host == 'linux' && 'kdf-x86_64-unknown-linux-gnu' || 'kdf-x86_64-pc-windows-msvc' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: ${{ github.workspace }}/kdf_archives
+
+      - name: Restore KDF Binary Permissions (macOS/Linux)
+        if: runner.os != 'Windows'
+        run: |
+          if [ -f "${{ github.workspace }}/kdf_archives/kdf" ]; then
+            chmod +x "${{ github.workspace }}/kdf_archives/kdf"
+          fi
 
       - uses: lukka/get-cmake@latest
 
