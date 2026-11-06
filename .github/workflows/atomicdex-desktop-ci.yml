@@ -339,10 +339,10 @@ jobs:
         run: |
           echo "artifact_name_zstd=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD).tar.zst" >> $GITHUB_ENV
           echo "artifact_name_zip=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD).zip" >> $GITHUB_ENV
-          echo "artifact_name_appimage=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD)-x86_64.AppImage" >> $GITHUB_ENV
+          echo "artifact_name_appimage=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD).AppImage" >> $GITHUB_ENV
           echo "target_name_zstd=${{ env.DEX_PROJECT_NAME }}-linux-$(git rev-parse --short HEAD).tar.zst" >> $GITHUB_ENV
           echo "target_name_zip=${{ env.DEX_PROJECT_NAME }}-linux-$(git rev-parse --short HEAD).zip" >> $GITHUB_ENV
-          echo "target_name_appimage=${{ env.DEX_PROJECT_NAME }}-linux-$(git rev-parse --short HEAD)-x86_64.AppImage" >> $GITHUB_ENV
+          echo "target_name_appimage=${{ env.DEX_PROJECT_NAME }}-linux-$(git rev-parse --short HEAD).AppImage" >> $GITHUB_ENV
 
       - name: Rename files to desired artifact name
         if: runner.os == 'Linux'
