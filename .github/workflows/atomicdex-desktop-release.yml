@@ -50,43 +50,41 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - name: Download release artifacts from the CI run
+      - name: Download artifacts from the selected CI run
         uses: actions/download-artifact@v8
         with:
-          run-id: ${{ inputs.build_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: "*-release-*"
+          run-id: ${{ inputs.build_run_id }}
+          pattern: '*'
           merge-multiple: true
           path: downloaded
 
-      - name: Filter release files and strip build hashes
+      - name: Keep release assets and strip build hashes
+        shell: bash
         run: |
           mkdir -p release-assets
-          shopt -s nullglob
+          count=0
 
-          for file in downloaded/*; do
-            [[ -f "$file" ]] || continue
+          while IFS= read -r -d '' file; do
+            filename="${file##*/}"
 
-            base="${file##*/}"
+            # Match release filenames with a commit hash, including Linux
+            # AppImages and Windows installer executables.
+            if [[ "$filename" =~ ^(.+-release)-([[:xdigit:]]+)(-installer)?(-x86_64)?(\.(tar\.zst|zip|dmg|exe|AppImage))$ ]]; then
+              clean_name="${BASH_REMATCH[1]}${BASH_REMATCH[3]}${BASH_REMATCH[4]}${BASH_REMATCH[5]}"
+              cp -- "$file" "release-assets/$clean_name"
+              echo "Prepared: $filename -> $clean_name"
+              count=$((count + 1))
+            else
+              echo "Skipped: $filename"
+            fi
+          done < <(find downloaded -type f -print0)
 
-            # Only accept actual release artifacts, not debug builds
-            [[ "$base" == *"-release-"* ]] || continue
-            [[ "$base" == *"-debug-"* ]] && continue
+          if (( count == 0 )); then
+            echo "No matching release assets found." >&2
+            exit 1
+          fi
 
-            # Strip the git hash while keeping the platform/arch suffix,
-            # e.g.:
-            #   komodo-wallet-ubuntu-release-abcdef1.zip
-            #   -> komodo-wallet-ubuntu-release.zip
-            #
-            #   komodo-wallet-ubuntu-release-abcdef1-x86_64.AppImage
-            #   -> komodo-wallet-ubuntu-release-x86_64.AppImage
-            clean="$(printf '%s' "$base" | perl -pe 's/-[0-9a-f]{7,12}(?=(?:-x86_64)?\.(?:zip|tar\.zst|dmg|exe|AppImage)$)//')"
-
-            cp -- "$file" "release-assets/$clean"
-            echo "Prepared $clean"
-          done
-
-          echo "Release assets:"
           ls -l release-assets
 
       - name: Create GitHub release
