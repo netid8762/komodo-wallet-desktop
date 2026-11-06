@@ -350,6 +350,7 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-zstd
           path: ./bundled/linux/${{ env.artifact_name_zstd }}
           archive: false
           compression-level: 0
@@ -359,6 +360,7 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-zip
           path: ./bundled/linux/${{ env.artifact_name_zip }}
           archive: false
           compression-level: 0
@@ -368,6 +370,7 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-appimage
           path: ./bundled/linux/${{ env.artifact_name_appimage }}
           archive: false
           compression-level: 0
@@ -387,6 +390,7 @@ jobs:
         if: runner.os == 'macOS'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-dmg
           path: ./bundled/osx/${{ env.artifact_name_dmg }}
           archive: false
           compression-level: 0
@@ -409,6 +413,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-zip
           path: ./bundled/windows/${{ env.artifact_name_zip }}
           archive: false
           compression-level: 0
@@ -418,6 +423,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v7
         with:
+          name: ${{ matrix.name }}-installer
           path: ./bundled/windows/${{ env.artifact_name_installer }}
           archive: false
           compression-level: 0

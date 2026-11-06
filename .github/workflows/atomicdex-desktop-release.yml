@@ -50,12 +50,12 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - name: Download artifacts from the selected CI run
+      - name: Download release artifacts from the selected CI run
         uses: actions/download-artifact@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ inputs.build_run_id }}
-          pattern: '*'
+          pattern: '*-release-*'
           merge-multiple: true
           path: downloaded
 
