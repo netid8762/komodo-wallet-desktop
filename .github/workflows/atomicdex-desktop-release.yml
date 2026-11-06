@@ -1,0 +1,105 @@
+name: Komodo Wallet Desktop Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: "Run ID from atomicdex-desktop-ci.yml to publish"
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish-release:
+    name: Publish desktop release
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Validate the source CI run
+        id: ci
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          json="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${{ inputs.build_run_id }}")"
+          conclusion="$(jq -r '.conclusion' <<<"$json")"
+          workflow_path="$(jq -r '.path' <<<"$json")"
+          head_sha="$(jq -r '.head_sha' <<<"$json")"
+
+          if [[ "$workflow_path" != ".github/workflows/atomicdex-desktop-ci.yml" ]]; then
+            echo "Selected run is not atomicdex-desktop-ci.yml: $workflow_path" >&2
+            exit 1
+          fi
+
+          if [[ "$conclusion" != "success" ]]; then
+            echo "Selected CI run did not succeed: $conclusion" >&2
+            exit 1
+          fi
+
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Read release version
+        id: version
+        run: |
+          version="$(jq -r '."version-string"' vcpkg.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Download release artifacts from the CI run
+        uses: actions/download-artifact@v8
+        with:
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: "*-release-*"
+          merge-multiple: true
+          path: downloaded
+
+      - name: Filter release files and strip build hashes
+        run: |
+          mkdir -p release-assets
+          shopt -s nullglob
+
+          for file in downloaded/*; do
+            [[ -f "$file" ]] || continue
+
+            base="${file##*/}"
+
+            # Only accept actual release artifacts, not debug builds
+            [[ "$base" == *"-release-"* ]] || continue
+            [[ "$base" == *"-debug-"* ]] && continue
+
+            # Strip the git hash while keeping the platform/arch suffix,
+            # e.g.:
+            #   komodo-wallet-ubuntu-release-abcdef1.zip
+            #   -> komodo-wallet-ubuntu-release.zip
+            #
+            #   komodo-wallet-ubuntu-release-abcdef1-x86_64.AppImage
+            #   -> komodo-wallet-ubuntu-release-x86_64.AppImage
+            clean="$(printf '%s' "$base" | perl -pe 's/-[0-9a-f]{7,12}(?=(?:-x86_64)?\.(?:zip|tar\.zst|dmg|exe|AppImage)$)//')"
+
+            cp -- "$file" "release-assets/$clean"
+            echo "Prepared $clean"
+          done
+
+          echo "Release assets:"
+          ls -l release-assets
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! ls release-assets/* >/dev/null 2>&1; then
+            echo "No release assets found; aborting." >&2
+            exit 1
+          fi
+
+          gh release create "${{ steps.version.outputs.tag }}" release-assets/* \
+            --target "${{ steps.ci.outputs.head_sha }}" \
+            --title "Komodo Wallet ${{ steps.version.outputs.version }}" \
+            --generate-notes
+
