@@ -1,4 +1,4 @@
-name: komodo-wallet-desktop CI
+name: Komodo Wallet Desktop CI
 
 on:
   workflow_dispatch:
