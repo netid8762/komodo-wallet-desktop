@@ -50,28 +50,33 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - name: Download release artifacts from the selected CI run
+      - name: Download artifacts from the selected CI run
         uses: actions/download-artifact@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ inputs.build_run_id }}
-          pattern: '*-release-*'
-          merge-multiple: true
+          pattern: '*'
+          merge-multiple: false
+          skip-decompress: true
           path: downloaded
 
-      - name: Keep release assets and strip build hashes
+      - name: Select non-debug assets and normalize filenames
         shell: bash
         run: |
           mkdir -p release-assets
-          count=0
 
+          echo "Downloaded artifact files:"
+          find downloaded -type f -printf '%P\n' | sort
+
+          count=0
           while IFS= read -r -d '' file; do
             filename="${file##*/}"
 
-            # Match release filenames with a commit hash, including Linux
-            # AppImages and Windows installer executables.
-            if [[ "$filename" =~ ^(.+-release)-([[:xdigit:]]+)(-installer)?(-x86_64)?(\.(tar\.zst|zip|dmg|exe|AppImage))$ ]]; then
-              clean_name="${BASH_REMATCH[1]}${BASH_REMATCH[3]}${BASH_REMATCH[4]}${BASH_REMATCH[5]}"
+            # Exclude every debug artifact; keep all supported release assets.
+            [[ "$filename" == *debug* ]] && continue
+
+            if [[ "$filename" =~ ^(.+)-release(-installer)?-([[:xdigit:]]+)(\.(tar\.zst|AppImage|zip|dmg|exe))$ ]]; then
+              clean_name="${BASH_REMATCH[1]}${BASH_REMATCH[2]}${BASH_REMATCH[4]}"
               cp -- "$file" "release-assets/$clean_name"
               echo "Prepared: $filename -> $clean_name"
               count=$((count + 1))
@@ -81,10 +86,11 @@ jobs:
           done < <(find downloaded -type f -print0)
 
           if (( count == 0 )); then
-            echo "No matching release assets found." >&2
+            echo "::error::No release assets found."
             exit 1
           fi
 
+          echo "Assets prepared for release:"
           ls -l release-assets
 
       - name: Create GitHub release
