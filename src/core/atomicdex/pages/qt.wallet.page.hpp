@@ -76,8 +76,8 @@ namespace atomic_dex
         // QML API
         Q_INVOKABLE void validate_address(QString address);
         Q_INVOKABLE void validate_address(QString address, QString ticker);
-        Q_INVOKABLE void convert_address(QString from, QVariant to_address_format);                 // https://developers.atomicdex.io/basic-docs/atomicdex/komodo-defi-framework.html#convertaddress
-        Q_INVOKABLE void convert_address(QString from, QString ticker, QVariant to_address_format); // https://developers.atomicdex.io/basic-docs/atomicdex/komodo-defi-framework.html#convertaddress
+        Q_INVOKABLE void convert_address(QString from, QVariant to_address_format);
+        Q_INVOKABLE void convert_address(QString from, QString ticker, QVariant to_address_format);
         Q_INVOKABLE void claim_rewards();
         Q_INVOKABLE void claim_faucet();
         //! `tx_json` is the JSON text of a withdraw answer's `tx_json` object, for a coin

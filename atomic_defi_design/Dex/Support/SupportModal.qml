@@ -99,7 +99,7 @@ Qaterial.Dialog
                 FAQLine
                 {
                     title: qsTr("Where can I see the orderbook or market statistics online?")
-                    text: qsTr('You can view an online orderbook and market statistics at <a href="https://markets.atomicdex.io/">https://markets.atomicdex.io/</a>, or use the Komodo Wallet in your browser at <a href="https://app.komodoplatform.com">https://app.komodoplatform.com</a>!')
+                    text: qsTr('You can view an online orderbook and market statistics at <a href="https://markets.komodoplatform.com/">https://markets.komodoplatform.com/</a>, or use the Komodo Wallet in your browser at <a href="https://app.komodoplatform.com">https://app.komodoplatform.com</a>!')
                 }
 
                 FAQLine

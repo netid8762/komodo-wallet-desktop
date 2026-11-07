@@ -16,7 +16,7 @@ env:
   DEX_DISPLAY_NAME: "Komodo Wallet"
   DEX_COMPANY: "KomodoPlatform"
   DEX_VERSION: "0.9.9"
-  DEX_WEBSITE: "https://atomicdex.io/"
+  DEX_WEBSITE: "https://kmdclassic.com"
   VCPKG_BINARY_SOURCES: default,readwrite
   VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg_cache
   RUNVCPKG_VCPKG_ROOT: ${{ github.workspace }}\komodo-wallet-desktop\ci_tools_atomic_dex\vcpkg-repo

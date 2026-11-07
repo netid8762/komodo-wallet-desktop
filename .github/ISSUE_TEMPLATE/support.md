@@ -7,6 +7,6 @@ assignees: ''
 
 ---
 
-[Komodo Platform Discord Support Channel](https://discord.gg/RRZ8hzc)
+[Komodo Platform Discord Support Channel](https://discord.gg/ZBZnx4CxXb)
 [Komodo Platform Forum](https://forum.komodoplatform.com/t/komodo-wallet-desktop-collection/541)
 [Develper Documentation](https://developers.komodoplatform.com/)
