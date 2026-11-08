@@ -14,6 +14,7 @@ namespace atomic_dex::komodo_prices::api
         coinpaprika,
         forex,
         livecoinwatch,
+        swapscope,
         unknown
     };
 

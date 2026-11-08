@@ -135,6 +135,8 @@ namespace atomic_dex
             return "forex";
         case komodo_prices::api::provider::livecoinwatch:
             return "livecoinwatch";
+        case komodo_prices::api::provider::swapscope:
+            return "swapscope";
         default:
             return "unknown";
         }

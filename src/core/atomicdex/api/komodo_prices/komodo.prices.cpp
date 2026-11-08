@@ -62,6 +62,10 @@ namespace atomic_dex::komodo_prices::api
         {
             x = provider::livecoinwatch;
         }
+        else if (j == "swapscope")
+        {
+            x = provider::swapscope;
+        }
         else
         {
             x = provider::unknown;
