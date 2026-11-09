@@ -32,7 +32,7 @@
     </a>
 	<br/>
     <a href="https://github.com/netid8762/komodo-wallet-desktop/actions/workflows/atomicdex-desktop-ci.yml">
-        <img src="https://github.com/netid8762/komodo-wallet-desktop/actions/workflows/atomicdex-desktop-ci.yml/badge.svg?branch=master" alt="build status">
+        <img src="https://github.com/netid8762/komodo-wallet-desktop/actions/workflows/atomicdex-desktop-ci.yml/badge.svg" alt="build status">
     </a>
     <a href="https://github.com/netid8762/komodo-wallet-desktop/releases">
         <img src="https://img.shields.io/github/v/release/netid8762/komodo-wallet-desktop" alt="release version">
