@@ -38,7 +38,7 @@ namespace atomic_dex::kdf
         std::optional<address_format_t>              address_format;
         std::optional<nlohmann::json>                merge_params;
         int                                          min_connected{1};
-        int                                          max_connected{1};
+        int                                          max_connected{2};
     };
 
     struct electrum_answer
