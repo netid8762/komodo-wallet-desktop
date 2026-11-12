@@ -348,7 +348,6 @@ Qaterial.Dialog
                                 {
                                     if (success)
                                     {
-                                        restart_modal.item.onTimerEnded = () => API.app.restart()
                                         restart_modal.open()
                                     }
                                     else
