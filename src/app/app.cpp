@@ -20,7 +20,9 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkRequest>
 #include <QProcess>
+#include <QSaveFile>
 #include <QSettings>
 #include <QTimer>
 #ifdef __APPLE__
@@ -171,116 +173,257 @@ namespace atomic_dex
         return qt_wallet_manager::get_wallets().empty();
     }
 
-    void atomic_dex::application::reset_coin_cfg()
+    void application::update_coin_cfg()
     {
-        using namespace std::string_literals;
-        const std::string wallet_name                = qt_wallet_manager::get_default_wallet_name().toStdString();
-        const std::string wallet_cfg_file            = std::string(atomic_dex::get_raw_version()) + "-coins"s + "."s + wallet_name + ".json"s;
-        const fs::path    wallet_cfg_path{utils::get_atomic_dex_config_folder() / wallet_cfg_file};
-        const fs::path    kdf_coins_file_path{atomic_dex::utils::get_current_configs_path() / "coins.json"};
-        const fs::path    ini_file_path      = atomic_dex::utils::get_current_configs_path() / "cfg.ini";
-        const fs::path    cfg_json_file_path = atomic_dex::utils::get_current_configs_path() / "cfg.json";
-        const fs::path    logo_path          = atomic_dex::utils::get_logo_path();
-        const fs::path    theme_path         = atomic_dex::utils::get_themes_path();
-
-        const auto functor_remove = [](auto&& path_to_remove)
+        if (m_coin_config_update_in_progress)
         {
-            if (fs::exists(path_to_remove))
-            {
-                std::error_code ec;
-
-                if (fs::is_directory(path_to_remove))
-                {
-                    fs::remove_all(path_to_remove, ec);
-                }
-                else
-                {
-                    fs::remove(path_to_remove, ec);
-                }
-
-                if (ec)
-                {
-                    LOG_PATH("error when removing {}", path_to_remove);
-                    SPDLOG_ERROR("error: {}", ec.message());
-                }
-                else
-                {
-                    LOG_PATH("Successfully removed {}", path_to_remove);
-                }
-            }
-        };
-
-        if (fs::exists(wallet_cfg_path))
-        {
-            nlohmann::json coin_config_json_data;
-            std::unordered_set<std::string> active_coins_registry;
-            QFile          coins_file;
-            coins_file.setFileName(std_path_to_qstring(wallet_cfg_path));
-            coins_file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-            //! Read Contents
-            coin_config_json_data = nlohmann::json::parse(QString(coins_file.readAll()).toStdString());
-            coins_file.close();
-
-            //! Get the active coins
-            for (auto&& [key, value]: coin_config_json_data.items())
-            {
-                if (value["active"]) { active_coins_registry.insert(key); }
-            }
-
-            // remove old coins file
-            functor_remove(std::move(wallet_cfg_path));
-
-            //! Copy default coins file
-            const auto  cfg_path = ag::core::assets_real_path() / "config";
-            std::string filename = std::string(atomic_dex::get_raw_version()) + "-coins.json";
-            fs::copy(cfg_path / filename, wallet_cfg_path);
-            QFile          default_coins_file;
-
-            //! Open coins file
-            default_coins_file.setFileName(std_path_to_qstring(wallet_cfg_path));
-            default_coins_file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-            //! Read default coins contents
-            nlohmann::json default_coin_config_json_data;
-            default_coin_config_json_data = nlohmann::json::parse(QString(default_coins_file.readAll()).toStdString());
-            default_coins_file.close();
-
-            //! set active coins again
-            for (auto&& key: active_coins_registry)
-            {
-                try
-                {
-                    if (default_coin_config_json_data.contains(key))
-                    {
-                        default_coin_config_json_data[key]["active"] = true;
-                    }
-                }
-                catch (const std::exception& error)
-                {
-                    SPDLOG_ERROR("exception in atomic_dex::application::reset_coin_cfg: {}", error.what());
-                }
-            }
-
-            //! Write
-            QFile          output_coins_file;
-            //SPDLOG_DEBUG("Data written: ", default_coin_config_json_data.dump(4));
-            output_coins_file.setFileName(std_path_to_qstring(wallet_cfg_path));
-            output_coins_file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
-            output_coins_file.write(QString::fromStdString(default_coin_config_json_data.dump(4)).toUtf8());
-            output_coins_file.close();
+            return;
         }
 
-        functor_remove(std::move(kdf_coins_file_path));
-        functor_remove(std::move(cfg_json_file_path));
-        functor_remove(std::move(logo_path));
-        functor_remove(std::move(theme_path));
-        // Uncomment if you want to reset fiat/language/theme
-        // functor_remove(std::move(ini_file_path));
+        m_coin_config_update_in_progress = true;
+        m_coin_config_downloads_remaining = 2;
+        m_coin_config_update_error.clear();
+        m_downloaded_kdf_coins.clear();
+        m_downloaded_wallet_coins.clear();
 
-        QTimer::singleShot(50, qApp, []() {
-            atomic_dex::application::restart();
-        });
+        const auto start_download = [this](const QUrl& url, const QString& filename)
+        {
+            QNetworkRequest request(url);
+            request.setAttribute(
+                QNetworkRequest::RedirectPolicyAttribute,
+                QNetworkRequest::RedirectPolicy::NoLessSafeRedirectPolicy);
+
+            QNetworkReply* reply = m_coin_config_network.get(request);
+            connect(reply, &QNetworkReply::finished, this, [this, reply, filename]()
+            {
+                const QByteArray data = reply->readAll();
+                const auto status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+
+                if (reply->error())
+                {
+                    if (m_coin_config_update_error.isEmpty())
+                    {
+                        m_coin_config_update_error = reply->errorString();
+                    }
+                }
+                else if (status.isValid() && (status.toInt() < 200 || status.toInt() >= 300))
+                {
+                    if (m_coin_config_update_error.isEmpty())
+                    {
+                        m_coin_config_update_error =
+                            QString("Download of %1 returned HTTP %2").arg(filename).arg(status.toInt());
+                    }
+                }
+                else if (filename == "coins")
+                {
+                    m_downloaded_kdf_coins = data;
+                }
+                else
+                {
+                    m_downloaded_wallet_coins = data;
+                }
+
+                reply->deleteLater();
+
+                if (--m_coin_config_downloads_remaining == 0)
+                {
+                    apply_coin_config_update();
+                }
+            });
+        };
+
+        start_download(
+            QUrl("https://raw.githubusercontent.com/netid8762/coins/nogeo/coins"),
+            "coins");
+        start_download(
+            QUrl("https://raw.githubusercontent.com/netid8762/coins/nogeo/utils/coins_config_tcp.json"),
+            "coins_config_tcp.json");
+    }
+
+    void application::apply_coin_config_update()
+    {
+        const auto fail_update = [this](const QString& error)
+        {
+            m_coin_config_update_in_progress = false;
+            emit coinConfigUpdateFinished(false, error);
+        };
+
+        if (!m_coin_config_update_error.isEmpty())
+        {
+            fail_update(m_coin_config_update_error);
+            return;
+        }
+
+        try
+        {
+            using json = nlohmann::json;
+
+            const json kdf_coins = json::parse(
+                m_downloaded_kdf_coins.constData(),
+                m_downloaded_kdf_coins.constData() + m_downloaded_kdf_coins.size());
+            json wallet_coins = json::parse(
+                m_downloaded_wallet_coins.constData(),
+                m_downloaded_wallet_coins.constData() + m_downloaded_wallet_coins.size());
+
+            if (!kdf_coins.is_array() || kdf_coins.empty())
+            {
+                fail_update("The downloaded KDF coin configuration is not a non-empty JSON array.");
+                return;
+            }
+
+            if (!wallet_coins.is_object() || wallet_coins.empty())
+            {
+                fail_update("The downloaded wallet coin configuration is not a non-empty JSON object.");
+                return;
+            }
+
+            const std::string wallet_name =
+                qt_wallet_manager::get_default_wallet_name().toStdString();
+            if (wallet_name.empty())
+            {
+                fail_update("Could not determine the current wallet.");
+                return;
+            }
+
+            const fs::path wallet_cfg_path =
+                utils::get_atomic_dex_config_folder()
+                / (std::string(atomic_dex::get_raw_version()) + "-coins."
+                   + wallet_name + ".json");
+            const fs::path kdf_coins_path =
+                utils::get_current_configs_path() / "coins.json";
+
+            // Keep coins that were active in this wallet, when they still exist in the new config.
+            if (fs::exists(wallet_cfg_path))
+            {
+                QFile current_wallet_file(std_path_to_qstring(wallet_cfg_path));
+                if (!current_wallet_file.open(QIODevice::ReadOnly | QIODevice::Text))
+                {
+                    fail_update("Could not read the current wallet coin configuration.");
+                    return;
+                }
+
+                const json current_wallet_coins = json::parse(
+                    current_wallet_file.readAll().toStdString());
+
+                if (!current_wallet_coins.is_object())
+                {
+                    fail_update("The current wallet coin configuration has an unexpected format.");
+                    return;
+                }
+
+                for (auto it = wallet_coins.begin(); it != wallet_coins.end(); ++it)
+                {
+                    const auto current = current_wallet_coins.find(it.key());
+                    if (current != current_wallet_coins.end()
+                        && current->is_object()
+                        && current->contains("active")
+                        && current->at("active").is_boolean()
+                        && current->at("active").get<bool>()
+                        && it.value().is_object())
+                    {
+                        it.value()["active"] = true;
+                    }
+                }
+            }
+
+            const auto read_file = [](const fs::path& path, QByteArray& contents) -> bool
+            {
+                if (!fs::exists(path))
+                {
+                    contents.clear();
+                    return true;
+                }
+
+                QFile file(std_path_to_qstring(path));
+                if (!file.open(QIODevice::ReadOnly))
+                {
+                    return false;
+                }
+                contents = file.readAll();
+                return true;
+            };
+
+            QByteArray previous_kdf_coins;
+            QByteArray previous_wallet_coins;
+            const bool had_kdf_file = fs::exists(kdf_coins_path);
+            const bool had_wallet_file = fs::exists(wallet_cfg_path);
+
+            if (!read_file(kdf_coins_path, previous_kdf_coins)
+                || !read_file(wallet_cfg_path, previous_wallet_coins))
+            {
+                fail_update("Could not back up the existing coin configuration files.");
+                return;
+            }
+
+            const auto atomic_write = [](const fs::path& path, const QByteArray& contents) -> bool
+            {
+                QSaveFile file(std_path_to_qstring(path));
+                if (!file.open(QIODevice::WriteOnly))
+                {
+                    return false;
+                }
+
+                if (file.write(contents) != contents.size())
+                {
+                    file.cancelWriting();
+                    return false;
+                }
+
+                return file.commit();
+            };
+
+            const auto restore_file = [&atomic_write](const fs::path& path,
+                                                       const QByteArray& previous,
+                                                       bool previously_existed)
+            {
+                if (previously_existed)
+                {
+                    return atomic_write(path, previous);
+                }
+
+                std::error_code ec;
+                fs::remove(path, ec);
+                return !ec;
+            };
+
+            // Write the KDF file first. If the wallet file cannot be installed,
+            // restore the KDF file so the pair remains consistent.
+            if (!atomic_write(kdf_coins_path, m_downloaded_kdf_coins))
+            {
+                fail_update("Could not install the updated KDF coin configuration.");
+                return;
+            }
+
+            const QByteArray wallet_data =
+                QByteArray::fromStdString(wallet_coins.dump(4));
+
+            if (!atomic_write(wallet_cfg_path, wallet_data))
+            {
+                if (!restore_file(kdf_coins_path, previous_kdf_coins, had_kdf_file))
+                {
+                    SPDLOG_ERROR("Failed to restore the previous KDF coin configuration after an update failure.");
+                }
+
+                // Restore the wallet file too if it existed; it was not expected to
+                // have changed, but this keeps the failure path explicit.
+                if (had_wallet_file
+                    && !restore_file(wallet_cfg_path, previous_wallet_coins, true))
+                {
+                    SPDLOG_ERROR("Failed to restore the previous wallet coin configuration after an update failure.");
+                }
+
+                fail_update("Could not install the updated wallet coin configuration.");
+                return;
+            }
+
+            m_coin_config_update_in_progress = false;
+            emit coinConfigUpdateFinished(true, QString{});
+        }
+        catch (const std::exception& error)
+        {
+            SPDLOG_ERROR("Coin configuration update failed: {}", error.what());
+            fail_update(QString::fromUtf8(error.what()));
+        }
     }
 
     void application::launch()

@@ -320,27 +320,45 @@ Qaterial.Dialog
                             {
                                 width: parent.width - 30
                                 height: 50
-                                title: qsTr("Reset wallet configuration")
-                                buttonText: qsTr("Reset")
+                                title: qsTr("Update coin configuration")
+                                buttonText: qsTr("Update")
 
                                 onClicked:
                                 {
                                     let reset_dialog = app.showDialog(
                                     {
-                                        title: qsTr("Reset wallet configuration"),
-                                        text: qsTr("This will restart your wallet with default settings"),
+                                        title: qsTr("Update coin configuration"),
+                                        text: qsTr("This will download the latest coin configuration and restart your wallet."),
                                         standardButtons: Dialog.Yes | Dialog.Cancel,
                                         yesButtonText: qsTr("Confirm"),
                                         cancelButtonText: qsTr("Cancel"),
                                         onAccepted: function()
                                         {
-                                            restart_modal.open()
-                                            restart_modal.item.onTimerEnded = () =>
-                                            {
-                                                API.app.reset_coin_cfg()
-                                            }
+                                            API.app.update_coin_cfg()
                                         }
                                     })
+                                }
+                            }
+
+                            Connections
+                            {
+                                target: API.app
+
+                                function onCoinConfigUpdateFinished(success, error)
+                                {
+                                    if (success)
+                                    {
+                                        restart_modal.item.onTimerEnded = () => API.app.restart()
+                                        restart_modal.open()
+                                    }
+                                    else
+                                    {
+                                        app.showDialog({
+                                            title: qsTr("Coin configuration update failed"),
+                                            text: error,
+                                            standardButtons: Dialog.Ok
+                                        })
+                                    }
                                 }
                             }
                         }
