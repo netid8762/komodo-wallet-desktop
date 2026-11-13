@@ -18,7 +18,9 @@
 
 #include <QAbstractListModel>
 #include <QApplication>
+#include <QByteArray>
 #include <QImage>
+#include <QNetworkAccessManager>
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QSize>
@@ -95,6 +97,14 @@ namespace atomic_dex
         t_events_actions                      m_event_actions{{false}};
         std::atomic_bool                      m_secondary_coin_fully_enabled{false};
         std::atomic_bool                      m_primary_coin_fully_enabled{false};
+        QNetworkAccessManager                 m_coin_config_network;
+        QByteArray                            m_downloaded_kdf_coins;
+        QByteArray                            m_downloaded_wallet_coins;
+        QString                               m_coin_config_update_error;
+        int                                   m_coin_config_downloads_remaining{0};
+        bool                                  m_coin_config_update_in_progress{false};
+
+        void apply_coin_config_update();
 
       public:
         application(application& other)  = delete;
@@ -144,7 +154,7 @@ namespace atomic_dex
         //! Portfolio QML API Bindings
         Q_INVOKABLE QString recover_fund(const QString& uuid);
 
-        Q_INVOKABLE void               reset_coin_cfg();
+        Q_INVOKABLE void               update_coin_cfg();
         Q_INVOKABLE static QString     get_mnemonic();
         Q_INVOKABLE static bool        first_run();
         Q_INVOKABLE bool               disconnect();
@@ -174,6 +184,7 @@ namespace atomic_dex
         void tradingPageChanged();
         void settingsPageChanged();
         void exporterServiceChanged();
+        void coinConfigUpdateFinished(bool success, const QString& error);
       public slots:
         void exit_handler();
         void app_state_changed();

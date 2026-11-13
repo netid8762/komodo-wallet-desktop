@@ -289,7 +289,10 @@ Item
     ModalLoader
     {
         id: restart_modal
-        sourceComponent: RestartModal {}
+        sourceComponent: RestartModal
+        {
+            onTimerEnded: API.app.restart()
+        }
     }
 
     // Download Zcash Params
