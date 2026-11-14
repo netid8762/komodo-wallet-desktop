@@ -3,8 +3,12 @@ name: Komodo Wallet Desktop CI
 on:
   workflow_dispatch:
     inputs:
+      kdf_repository:
+        description: "kdf repository to use"
+        required: true
+        type: string
       kdf_run_id:
-        description: "Run ID from kdf to use"
+        description: "kdf run ID to use"
         required: true
         type: string
 
@@ -104,7 +108,7 @@ jobs:
       - name: Download KDF Artifact from External Repo
         uses: actions/download-artifact@v8
         with:
-          repository: netid8762/kdf
+          repository: ${{ inputs.kdf_repository }}
           run-id: ${{ inputs.kdf_run_id }}
           name: ${{ matrix.host == 'mac' && 'kdf-x86_64-apple-darwin' || matrix.host == 'linux' && 'kdf-x86_64-unknown-linux-gnu' || 'kdf-x86_64-pc-windows-msvc' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
