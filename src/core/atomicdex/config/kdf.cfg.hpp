@@ -41,7 +41,7 @@ namespace atomic_dex
         std::string              dbdir{utils::u8string((utils::get_atomic_dex_data_folder() / "kdf" / "DB"))};
         std::string              rpc_password{"atomic_dex_kdf_passphrase"};
         int64_t                  metrics_interval{7200};
-        std::string              electrum_server_order{"mixed"};
+        std::string              electrum_server_order{"measured"};
     };
 
     void from_json(const json& j, kdf_config& cfg);
