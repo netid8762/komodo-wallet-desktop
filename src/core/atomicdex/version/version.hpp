@@ -31,7 +31,7 @@ namespace atomic_dex
     constexpr const char*
     get_version()
     {
-        return "0.9.9";
+        return "1.0.0";
     }
 
     /// The build's short git commit hash, or an empty string when
@@ -47,19 +47,19 @@ namespace atomic_dex
     constexpr int
     get_num_version() noexcept
     {
-        return 99;
+        return 100;
     }
 
     constexpr const char*
     get_raw_version()
     {
-        return "0.9.9";
+        return "1.0.0";
     }
 
     constexpr const char*
     get_precedent_raw_version()
     {
-        return "0.8.2";
+        return "0.9.9";
     }
 
     /// "0.9.9" or "0.9.9 (abc123456)", depending on whether the commit hash

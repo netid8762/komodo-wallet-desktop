@@ -19,7 +19,7 @@ env:
   DEX_PROJECT_NAME: "komodo-wallet"
   DEX_DISPLAY_NAME: "Komodo Wallet"
   DEX_COMPANY: "KomodoPlatform"
-  DEX_VERSION: "0.9.9"
+  DEX_VERSION: "1.0.0"
   DEX_WEBSITE: "https://kmdclassic.com"
   VCPKG_BINARY_SOURCES: default,readwrite
   VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg_cache

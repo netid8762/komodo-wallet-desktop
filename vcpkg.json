@@ -1,6 +1,6 @@
 {
   "name": "komodo-wallet-desktop",
-  "version-string": "0.9.9",
+  "version-string": "1.0.0",
   "dependencies": [
     "boost-multiprecision",
     "boost-thread",
@@ -34,5 +34,5 @@
     "strong-type",
     "tl-expected"
   ],
-  "builtin-baseline": "dee92af2943e2216d7ba21ec4516a2c538c34c53"
+  "builtin-baseline": "4702e381dbbd9b54d3f7e1eb565cd8981c1814cd"
 }
